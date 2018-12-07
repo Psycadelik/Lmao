@@ -1,7 +1,7 @@
 <?php  include('../config.php'); ?>
-<?php  include(ROOT_PATH . '/admin/includes/admin_functions.php'); ?>
-<?php  include(ROOT_PATH . '/admin/includes/post_functions.php'); ?>
-<?php include(ROOT_PATH . '/admin/includes/head_section.php'); ?>
+<?php  include(ROOT_PATH . '/author/includes/author_functions.php'); ?>
+<?php  include(ROOT_PATH . '/author/includes/post_functions.php'); ?>
+<?php include(ROOT_PATH . '/author/includes/head_section.php'); ?>
 
 <!-- Get all admin posts from DB -->
 <?php $posts = getAllPosts(); ?>
@@ -9,11 +9,11 @@
 </head>
 <body>
 <!-- admin navbar -->
-<?php include(ROOT_PATH . '/admin/includes/navbar.php') ?>
+<?php include(ROOT_PATH . '/author/includes/navbar.php') ?>
 
 <div class="container content">
     <!-- Left side menu -->
-    <?php include(ROOT_PATH . '/admin/includes/menu.php') ?>
+    <?php include(ROOT_PATH . '/author/includes/menu.php') ?>
 
     <!-- Display records from DB-->
     <div class="table-div"  style="width: 80%;">
@@ -30,7 +30,7 @@
                 <th>Title</th>
                 <th>Views</th>
                 <!-- Only Admin can publish/unpublish post -->
-                <?php if ($_SESSION['user']['role'] == "Admin"): ?>
+                <?php if ($_SESSION['user']['role'] == "Author"): ?>
                     <th><small>Publish</small></th>
                 <?php endif ?>
                 <th><small>Edit</small></th>
@@ -49,8 +49,8 @@
                         </td>
                         <td><?php echo $post['views']; ?></td>
 
-                        <!-- Only Admin can publish/unpublish post -->
-                        <?php if ($_SESSION['user']['role'] == "Admin" ): ?>
+                        <!-- Only Admin & author can publish/unpublish post -->
+                        <?php if ($_SESSION['user']['role'] == "Author" ): ?>
                             <td>
                                 <?php if ($post['published'] == true): ?>
                                     <a class="fa fa-check btn unpublish"

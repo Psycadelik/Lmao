@@ -17,6 +17,9 @@
 			<h2>Register on LifeBlog</h2>
 			<?php include(ROOT_PATH . '/includes/errors.php') ?>
 			<input  type="text" name="username" value="<?php echo $username; ?>"  placeholder="Username">
+			<input type="text" name="first_name" value="<?php echo $first_name ?>" placeholder="firstname">
+			<input type="text" name="last_name" value="<?php echo $last_name ?>" placeholder="lastname">
+			<input type="text" name="gender" value="<?php echo $gender ?>" placeholder="gender">
 			<input type="email" name="email" value="<?php echo $email ?>" placeholder="Email">
 			<input type="password" name="password_1" placeholder="Password">
 			<input type="password" name="password_2" placeholder="Password confirmation">

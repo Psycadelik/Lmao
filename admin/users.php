@@ -3,7 +3,7 @@
 <?php 
 	// Get all admin users from DB
 	$admins = getAdminUsers();
-	$roles = ['Admin', 'Author'];				
+	$roles = ['Admin', 'Author','Editor'];
 ?>
 <?php include(ROOT_PATH . '/admin/includes/head_section.php'); ?>
 	<title>Admin | Manage users</title>
@@ -29,7 +29,10 @@
 				<?php endif ?>
 
 				<input type="text" name="username" value="<?php echo $username; ?>" placeholder="Username">
-				<input type="email" name="email" value="<?php echo $email ?>" placeholder="Email">
+                <input type="text" name="first_name" value="<?php echo $first_name ?>" placeholder="firstname">
+                <input type="text" name="last_name" value="<?php echo $last_name ?>" placeholder="lastname">
+                <input type="text" name="gender" value="<?php echo $gender ?>" placeholder="gender">
+                <input type="email" name="email" value="<?php echo $email ?>" placeholder="Email">
 				<input type="password" name="password" placeholder="Password">
 				<input type="password" name="passwordConfirmation" placeholder="Password confirmation">
 				<select name="role">
@@ -70,6 +73,7 @@
 							<td><?php echo $key + 1; ?></td>
 							<td>
 								<?php echo $admin['username']; ?>, &nbsp;
+
 								<?php echo $admin['email']; ?>	
 							</td>
 							<td><?php echo $admin['role']; ?></td>

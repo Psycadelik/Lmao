@@ -26,6 +26,7 @@
 				<input type="text" name="username" value="<?php echo $username; ?>" placeholder="Username">
 				<input type="password" name="password"  placeholder="Password"> 
 				<button class="btn" type="submit" name="login_btn">Sign in</button>
+				<a href="register.php"><button class="btn" type="button" name="">Register</button></a>
 			</form>
 	</div>
 </div>

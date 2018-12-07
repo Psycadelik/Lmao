@@ -17,12 +17,19 @@ $dbname = "personalBlog";
 	if (isset($_POST['reg_user'])) {
 		// receive all input values from the form
 		$username = esc($_POST['username']);
+		$firstName = esc($_POST['first_name']);
+		$lastName = esc($_POST['last_name']);
+		$gender = esc($_POST['gender']);
 		$email = esc($_POST['email']);
+		$role = "Author";
 		$password_1 = esc($_POST['password_1']);
 		$password_2 = esc($_POST['password_2']);
 
 		// form validation: ensure that the form is correctly filled
 		if (empty($username)) {  array_push($errors, "Uhmm...We gonna need your username"); }
+		if (empty($firstName)) {  array_push($errors, "Uhmm...We gonna need your firstname"); }
+		if (empty($lastName)) {  array_push($errors, "Uhmm...We gonna need your lastname"); }
+		if (empty($gender)) {  array_push($errors, "Uhmm...We gonna need your gender"); }
 		if (empty($email)) { array_push($errors, "Oops.. Email is missing"); }
 		if (empty($password_1)) { array_push($errors, "uh-oh you forgot the password"); }
 		if ($password_1 != $password_2) { array_push($errors, "The two passwords do not match");}
@@ -45,9 +52,9 @@ $dbname = "personalBlog";
 		}
 		// register user if there are no errors in the form
 		if (count($errors) == 0) {
-			$password = md5($password_1);//encrypt the password before saving in the database
-			$query = "INSERT INTO users (username, email, password, created_at, updated_at) 
-					  VALUES('$username', '$email', '$password', now(), now())";
+			// $password = md5($password_1);//encrypt the password before saving in the database
+			$query = "INSERT INTO users (username,first_name,last_name,gender, email,role, password, created_at, updated_at) 
+					  VALUES('$username','$firstName','$lastName','$gender','$email', '$role','$password', now(), now())";
 			mysqli_query($conn, $query);
 
 			// get id of created user
@@ -57,12 +64,22 @@ $dbname = "personalBlog";
 			$_SESSION['user'] = getUserById($reg_user_id);
 
 			// if user is admin, redirect to admin area
-			if ( in_array($_SESSION['user']['role'], ["Admin", "Author"])) {
+			if ( in_array($_SESSION['user']['role'], ["Admin"])) {
 				$_SESSION['message'] = "You are now logged in";
 				// redirect to admin area
 				header('location: ' . BASE_URL . 'admin/dashboard.php');
 				exit(0);
-			} else {
+			}elseif(in_array($_SESSION['user']['role'], ["Author"])) {
+				$_SESSION['message'] = "You are now logged in";
+				// redirect to admin area
+				header('location: ' . BASE_URL . 'author/dashboard.php');
+                exit(0);
+			}elseif (in_array($_SESSION['user']['role'], ["Editor"])) {
+				$_SESSION['message'] = "You are now logged in";
+				// redirect to admin area
+				header('location: ' . BASE_URL . 'editor/dashboard.php');
+                exit(0);
+			}else {
 				$_SESSION['message'] = "You are now logged in";
 				// redirect to public area
 				header('location: index.php');				
@@ -96,11 +113,21 @@ $dbname = "personalBlog";
 				$_SESSION['user'] = getUserById($reg_user_id); 
 
 				// if user is admin, redirect to admin area
-				if ( in_array($_SESSION['user']['role'], ["Admin", "Author"])) {
+				if ( in_array($_SESSION['user']['role'], ["Admin"])) {
 					$_SESSION['message'] = "You are now logged in";
 					// redirect to admin area
 					header('location: ' . BASE_URL . '/admin/dashboard.php');
 					exit(0);
+				}elseif(in_array($_SESSION['user']['role'], ["Author"])) {
+					$_SESSION['message'] = "You are now logged in";
+					// redirect to admin area
+					header('location: ' . BASE_URL . 'author/dashboard.php');
+                	exit(0);
+				}elseif (in_array($_SESSION['user']['role'], ["Editor"])) {
+					$_SESSION['message'] = "You are now logged in";
+					// redirect to admin area
+					header('location: ' . BASE_URL . 'editor/dashboard.php');
+                	exit(0);
 				} else {
 					$_SESSION['message'] = "You are now logged in";
 					// redirect to public area
